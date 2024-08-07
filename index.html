@@ -9,7 +9,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const token = urlParams.get('token');
             if (token) {
-                fetch('https://your-api-endpoint.com/verify', {
+                fetch('https://your-vercel-app.vercel.app/api/verify', {  // VercelにデプロイしたバックエンドAPIのURL
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

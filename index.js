@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 
@@ -20,8 +21,10 @@ app.options('*', cors(corsOptions));
 app.use('/api/verify', require('./verification-api/api/verify'));
 app.use('/api/generate-token', require('./verification-api/api/generate-token'));
 
+app.use(express.static(path.join(__dirname, 'public')));
+
 app.get('/', (req, res) => {
-  res.send('Verification API is running');
+  res.sendFile(path.join(__dirname, 'index.html')); // 追加
 });
 
 const PORT = process.env.PORT || 3000;

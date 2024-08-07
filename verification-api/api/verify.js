@@ -1,4 +1,4 @@
-const tokens = {};
+const tokens = require('./tokens');
 
 module.exports = (req, res) => {
   if (req.method === "POST") {
@@ -7,7 +7,7 @@ module.exports = (req, res) => {
       tokens[token].verified = true;
       res.status(200).json({ success: true });
     } else {
-      res.status(404).json({ success: false });
+      res.status(404).json({ success: false, message: "Invalid token" });
     }
   } else {
     res.status(405).json({ error: "Method Not Allowed" });

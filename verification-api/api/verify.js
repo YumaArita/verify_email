@@ -1,6 +1,8 @@
 const tokens = require('./tokens');
 
 module.exports = (req, res) => {
+  res.set({ 'Access-Control-Allow-Origin': '*' });
+
   if (req.method === "POST") {
     const { token } = req.body;
     if (tokens[token]) {

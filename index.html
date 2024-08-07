@@ -4,6 +4,46 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>メールアドレス認証</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #6a11cb, #2575fc);
+            color: #fff;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            text-align: center;
+        }
+        .container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px 40px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+        }
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2em;
+        }
+        .link {
+            display: block;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background: #fff;
+            color: #2575fc;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background 0.3s, color 0.3s;
+        }
+        .link:hover {
+            background: #2575fc;
+            color: #fff;
+        }
+    </style>
     <script>
         function verifyEmail() {
             const urlParams = new URLSearchParams(window.location.search);
@@ -24,6 +64,7 @@
                         const link = document.createElement('a');
                         link.href = 'exp+expensetracker://verify?token=' + token;
                         link.innerText = 'アプリを開く';
+                        link.className = 'link';
                         resultElement.appendChild(link);
                     } else {
                         resultElement.innerText = '認証に失敗しました。';
@@ -40,7 +81,9 @@
     </script>
 </head>
 <body onload="verifyEmail()">
-    <h1>メールアドレス認証</h1>
-    <p id="result">認証中...</p>
+    <div class="container">
+        <h1>メールアドレス認証</h1>
+        <p id="result">認証中...</p>
+    </div>
 </body>
 </html>

@@ -20,6 +20,10 @@ app.options('*', cors(corsOptions));
 app.use('/api/verify', require('./verification-api/api/verify'));
 app.use('/api/generate-token', require('./verification-api/api/generate-token'));
 
+app.get('/', (req, res) => {
+  res.send('Verification API is running');
+});
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

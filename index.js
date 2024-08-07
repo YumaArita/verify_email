@@ -3,12 +3,16 @@ const cors = require('cors');
 
 const app = express();
 
+// CORS設定
 const corsOptions = {
   origin: 'https://yumaarita.github.io',
-  optionsSuccessStatus: 200
+  optionsSuccessStatus: 200,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: ['Content-Type'],
 };
 
 app.use(cors(corsOptions));
+app.use(express.json());
 
 app.use('/api/verify', require('./verify'));
 app.use('/api/generate-token', require('./generate-token'));

@@ -9,7 +9,8 @@ const corsOptions = {
   origin: 'https://yumaarita.github.io',
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'X-Requested-With', 'Accept'],
+  allowedHeaders: ["Access-Control-Allow-Headers",
+  "Origin, X-Requested-With, Content-Type, Authorization, Accept"],
   credentials: true
 };
 

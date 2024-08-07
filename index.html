@@ -67,9 +67,11 @@
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Accept': 'application/json',
                 },
                 body: JSON.stringify({ token }),
-                credentials: 'include'
+                credentials: 'include',
+                mode: 'cors'
             })
             .then(response => {
                 if (!response.ok) {

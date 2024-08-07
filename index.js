@@ -12,6 +12,8 @@ const corsOptions = {
   allowedHeaders: ['Content-Type'],
 };
 
+app.get('/favicon.ico', (req, res) => res.status(204));
+
 app.use(cors(corsOptions));
 app.use(express.json());
 

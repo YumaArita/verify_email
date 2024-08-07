@@ -1,4 +1,4 @@
-const tokens = require('./tokens');
+const tokens = require('./token');
 
 module.exports = (req, res) => {
   res.set({

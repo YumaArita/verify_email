@@ -9,7 +9,7 @@
             const urlParams = new URLSearchParams(window.location.search);
             const token = urlParams.get('token');
             if (token) {
-                fetch('https://your-vercel-app.vercel.app/api/verify', {  // VercelにデプロイしたバックエンドAPIのURL
+                fetch('https://verify-email-4bengvvmh-yuma-fukudas-projects.vercel.app/api/verify', {  // VercelにデプロイしたバックエンドAPIのURL
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

@@ -17,8 +17,8 @@ app.use(express.json());
 // プリフライトリクエストを処理
 app.options('*', cors(corsOptions));
 
-app.use('/api/verify', require('./verify'));
-app.use('/api/generate-token', require('./generate-token'));
+app.use('/verification-api/api/verify', require('./verify'));
+app.use('/verification-api/api/generate-token', require('./generate-token'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

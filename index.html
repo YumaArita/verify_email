@@ -59,37 +59,44 @@
         }
     </style>
     <script>
-        function verifyEmail() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const token = urlParams.get('token');
-            if (token) {
-                fetch('https://verify-email-4bengvvmh-yuma-fukudas-projects.vercel.app/api/verify', {  // VercelにデプロイしたバックエンドAPIのURL
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ token }),
-                })
-                .then(response => response.json())
-                .then(data => {
-                    const resultElement = document.getElementById('result');
-                    if (data.success) {
-                        resultElement.innerText = 'メールアドレスが確認されました。アプリに戻ってログインしてください。';
-                        const link = document.createElement('a');
-                        link.href = 'exp+expensetracker://verify?token=' + token;
-                        link.innerText = 'アプリを開く';
-                        link.className = 'link';
-                        resultElement.appendChild(link);
-                    } else {
-                        resultElement.innerText = '認証に失敗しました。';
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    document.getElementById('result').innerText = 'エラーが発生しました。';
-                });
-            } else {
-                document.getElementById('result').innerText = 'トークンが見つかりません。';
+    function verifyEmail() {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
+        if (token) {
+            fetch('https://verify-email-4bengvvmh-yuma-fukudas-projects.vercel.app/api/verify', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ token }),
+                credentials: 'include'
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                const resultElement = document.getElementById('result');
+                if (data.success) {
+                    resultElement.innerText = 'メールアドレスが確認されました。アプリに戻ってログインしてください。';
+                    const link = document.createElement('a');
+                    link.href = 'exp+expensetracker://verify?token=' + token;
+                    link.innerText = 'アプリを開く';
+                    link.className = 'link';
+                    resultElement.appendChild(document.createElement('br'));
+                    resultElement.appendChild(link);
+                } else {
+                    resultElement.innerText = '認証に失敗しました。';
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                document.getElementById('result').innerText = 'エラーが発生しました: ' + error.message;
+            });
+        } else {
+            document.getElementById('result').innerText = 'トークンが見つかりません。';
             }
         }
     </script>

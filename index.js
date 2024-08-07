@@ -23,8 +23,8 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-app.use('/verificstion-spi/api/verify', require('./verify'));
-app.use('/verificstion-spi/api/generate-token', require('./generate-token'));
+app.use('/verification-spi/api/verify', require('./verify'));
+app.use('/verification-spi/api/generate-token', require('./generate-token'));
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
@@ -9,8 +10,10 @@ const corsOptions = {
   origin: 'https://yumaarita.github.io',
   optionsSuccessStatus: 200,
   methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: ["Access-Control-Allow-Headers",
-  "Origin, X-Requested-With, Content-Type, Authorization, Accept"],
+  allowedHeaders: [
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Authorization, Accept"
+  ],
   credentials: true
 };
 
@@ -24,9 +27,16 @@ app.options('*', (req, res) => {
 
 app.get('/favicon.ico', (req, res) => res.status(204));
 
-app.use('/api/verify', require('./verification-api/api/verify'));
-app.use('/api/generate-token', require('./verification-api/api/generate-token'));
+// プロキシ設定
+app.use('/api', createProxyMiddleware({
+  target: 'https://verify-email-4bengvvmh-yuma-fukudas-projects.vercel.app', // VercelにデプロイしたバックエンドAPIのURL
+  changeOrigin: true,
+  pathRewrite: {
+    '^/api': '', // /apiから始まるパスをバックエンドAPIのルートにマッピングします
+  },
+}));
 
+// 静的ファイルの提供
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/', (req, res) => {

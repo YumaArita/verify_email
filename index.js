@@ -9,7 +9,7 @@ const corsOptions = {
   origin: 'https://yumaarita.github.io',
   optionsSuccessStatus: 200,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type'],
+  allowedHeaders: ['Content-Type', 'X-Requested-With'],
 };
 
 app.get('/favicon.ico', (req, res) => res.status(204));

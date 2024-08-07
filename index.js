@@ -8,8 +8,8 @@ const app = express();
 const corsOptions = {
   origin: 'https://yumaarita.github.io',
   optionsSuccessStatus: 200,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: ['Content-Type', 'X-Requested-With'],
+  methods: ['GET', 'POST', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'X-Requested-With', 'Accept'],
   credentials: true
 };
 

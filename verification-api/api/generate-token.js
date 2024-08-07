@@ -1,4 +1,4 @@
-const tokens = {};
+const tokens = require('./tokens');
 
 module.exports = (req, res) => {
   if (req.method === "POST") {

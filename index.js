@@ -3,7 +3,6 @@ const cors = require('cors');
 
 const app = express();
 
-// CORS設定
 const corsOptions = {
   origin: 'https://yumaarita.github.io',
   optionsSuccessStatus: 200
@@ -11,7 +10,6 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// あなたの他のルートやミドルウェアの設定
 app.use('/api/verify', require('./verify'));
 app.use('/api/generate-token', require('./generate-token'));
 

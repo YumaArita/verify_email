@@ -18,7 +18,9 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 // プリフライトリクエストを処理
-app.options('*', cors(corsOptions));
+app.options('*', (req, res) => {
+  res.status(204).send();
+});
 
 app.get('/favicon.ico', (req, res) => res.status(204));
 

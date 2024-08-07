@@ -7,12 +7,20 @@ const app = express();
 const corsOptions = {
   origin: 'https://yumaarita.github.io',
   optionsSuccessStatus: 200,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE,OPTIONS',
   allowedHeaders: ['Content-Type'],
 };
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+app.use((req, res, next) => {
+  res.set({ 'Access-Control-Allow-Origin': '*' });
+  next();
+});
+
+app.options('/api/verify', cors(corsOptions));
+app.options('/api/generate-token', cors(corsOptions));
 
 app.use('/api/verify', require('./verify'));
 app.use('/api/generate-token', require('./generate-token'));

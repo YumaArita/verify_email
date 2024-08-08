@@ -63,7 +63,7 @@
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
         if (token) {
-            fetch('https://verify-email-mu.vercel.app/api/verify', {
+            fetch('https://your-backend-domain.com/api/verify', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -99,8 +99,8 @@
             });
         } else {
             document.getElementById('result').innerText = 'トークンが見つかりません。';
-            }
         }
+    }
     </script>
 </head>
 <body onload="verifyEmail()">

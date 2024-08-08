@@ -1,43 +1,41 @@
-const express = require('express');
-const cors = require('cors');
-const path = require('path');
+const crypto = require('crypto');
+const SECRET_KEY = process.env.SECRET_KEY;
 
-const app = express();
+const verifyToken = (token) => {
+  if (!SECRET_KEY) {
+    throw new Error("SECRET_KEY is not defined");
+  }
 
-// CORS設定
-const corsOptions = {
-  origin: 'https://yumaarita.github.io',
-  optionsSuccessStatus: 200,
-  methods: ['GET', 'POST', 'OPTIONS'],
-  allowedHeaders: [
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Authorization, Accept"
-  ],
-  credentials: true
+  const [base64data, receivedSignature] = token.split(".");
+  if (!base64data || !receivedSignature) {
+    return null;
+  }
+
+  const expectedSignature = crypto.createHmac('sha256', SECRET_KEY).update(base64data).digest('hex');
+  if (expectedSignature !== receivedSignature) {
+    return null;
+  }
+
+  const decodedData = JSON.parse(Buffer.from(base64data, 'base64').toString('utf-8'));
+
+  if (decodedData.exp < Math.floor(Date.now() / 1000)) {
+    return null;
+  }
+
+  return decodedData.email;
 };
 
-app.use(cors(corsOptions));
-app.use(express.json());
-
-// プリフライトリクエストを処理
-app.options('*', (req, res) => {
-  res.status(204).send();
-});
-
-// favicon.icoのリクエストを処理
-app.get('/favicon.ico', (req, res) => res.status(204).end());
-
-// 直接 /verification-api/api/verify エンドポイントを処理
-app.all('/api/verify', require('./verification-api/api/verify'));
-
-// 静的ファイルの提供
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, 'index.html'));
-});
-
-const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
-  console.log(`Server is running on port ${PORT}`);
-});
+module.exports = async (req, res) => {
+  const token = req.query.token;
+  try {
+    const email = verifyToken(token);
+    if (email) {
+      res.status(200).json({ success: true, email });
+    } else {
+      res.status(404).json({ success: false, message: "Invalid token" });
+    }
+  } catch (error) {
+    console.error('Error processing request:', error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};

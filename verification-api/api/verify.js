@@ -6,7 +6,12 @@ const verifyToken = (token) => {
     throw new Error("SECRET_KEY is not defined");
   }
 
-  const [base64data, receivedSignature] = token.split(".");
+  const parts = token.split(".");
+  if (parts.length !== 2) {
+    return null;
+  }
+
+  const [base64data, receivedSignature] = parts;
   if (!base64data || !receivedSignature) {
     return null;
   }
@@ -26,7 +31,7 @@ const verifyToken = (token) => {
 };
 
 module.exports = async (req, res) => {
-  const token = req.method === "POST" ? req.body.token : req.query.token;
+  const token = req.query.token;
   try {
     const email = verifyToken(token);
     if (email) {

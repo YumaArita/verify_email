@@ -45,7 +45,7 @@ app.use('/api', createProxyMiddleware({
 }));
 
 // 直接 /verify エンドポイントを処理
-app.all('/verify', require('./verify'));
+app.all('/verify', require('./verification-api/api/verify'));
 
 // 静的ファイルの提供
 app.use(express.static(path.join(__dirname, 'public')));

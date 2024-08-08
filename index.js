@@ -37,6 +37,10 @@ app.use('/api', createProxyMiddleware({
   onProxyReq: (proxyReq, req, res) => {
     console.log('Proxying request to:', proxyReq.url);
   },
+  onError: (err, req, res) => {
+    console.error('Error proxying request:', err);
+    res.status(500).json({ error: 'Proxy error', details: err.message });
+  },
 }));
 
 // 静的ファイルの提供

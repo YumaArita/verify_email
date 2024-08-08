@@ -1,7 +1,6 @@
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
-const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
@@ -27,25 +26,6 @@ app.options('*', (req, res) => {
 
 // favicon.icoのリクエストを処理
 app.get('/favicon.ico', (req, res) => res.status(204).end());
-
-// プロキシ設定
-app.use('/api', createProxyMiddleware({
-  target: 'https://verify-email-mu.vercel.app',
-  changeOrigin: true,
-  pathRewrite: {
-    '^/api': '',
-  },
-  onProxyReq: (proxyReq, req, res) => {
-    console.log('Proxying request to:', req.method, proxyReq.path);
-  },
-  onError: (err, req, res) => {
-    console.error('Error proxying request:', err);
-    res.status(500).json({ error: 'Proxy error', details: err.message });
-  },
-}));
-
-// 直接 /verify エンドポイントを処理
-app.all('/verify', require('./verification-api/api/verify'));
 
 // 静的ファイルの提供
 app.use(express.static(path.join(__dirname, 'public')));

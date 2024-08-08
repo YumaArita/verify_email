@@ -1,5 +1,4 @@
 const crypto = require('crypto');
-const { enc } = require('crypto-js');
 const SECRET_KEY = process.env.SECRET_KEY;
 
 const verifyToken = (token) => {
@@ -27,20 +26,16 @@ const verifyToken = (token) => {
 };
 
 module.exports = async (req, res) => {
-  if (req.method === "POST" || req.method === "GET") {
-    const token = req.method === "POST" ? req.body.token : req.query.token;
-    try {
-      const email = verifyToken(token);
-      if (email) {
-        res.status(200).json({ success: true, email });
-      } else {
-        res.status(404).json({ success: false, message: "Invalid token" });
-      }
-    } catch (error) {
-      console.error('Error processing request:', error);
-      res.status(500).json({ success: false, message: "Internal server error" });
+  const token = req.method === "POST" ? req.body.token : req.query.token;
+  try {
+    const email = verifyToken(token);
+    if (email) {
+      res.status(200).json({ success: true, email });
+    } else {
+      res.status(404).json({ success: false, message: "Invalid token" });
     }
-  } else {
-    res.status(405).json({ error: "Method Not Allowed" });
+  } catch (error) {
+    console.error('Error processing request:', error);
+    res.status(500).json({ success: false, message: "Internal server error" });
   }
 };

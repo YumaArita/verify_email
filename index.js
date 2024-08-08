@@ -25,7 +25,8 @@ app.options('*', (req, res) => {
   res.status(204).send();
 });
 
-app.get('/favicon.ico', (req, res) => res.status(204));
+// favicon.icoのリクエストを処理
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // プロキシ設定
 app.use('/api', createProxyMiddleware({
@@ -35,13 +36,16 @@ app.use('/api', createProxyMiddleware({
     '^/api': '',
   },
   onProxyReq: (proxyReq, req, res) => {
-    console.log('Proxying request to:', proxyReq.url);
+    console.log('Proxying request to:', req.method, proxyReq.path);
   },
   onError: (err, req, res) => {
     console.error('Error proxying request:', err);
     res.status(500).json({ error: 'Proxy error', details: err.message });
   },
 }));
+
+// 直接 /verify エンドポイントを処理
+app.all('/verify', require('./verify'));
 
 // 静的ファイルの提供
 app.use(express.static(path.join(__dirname, 'public')));

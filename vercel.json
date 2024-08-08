@@ -2,6 +2,14 @@
   "version": 2,
   "builds": [
     {
+      "src": "verification-api/api/verify.js",
+      "use": "@vercel/node"
+    },
+    {
+      "src": "verification-api/api/generate-token.js",
+      "use": "@vercel/node"
+    },
+    {
       "src": "index.js",
       "use": "@vercel/node"
     }
@@ -9,7 +17,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/index.js",
+      "dest": "/verification-api/api/$1",
       "methods": ["OPTIONS", "POST", "GET"],
       "headers": {
         "Access-Control-Allow-Origin": "https://yumaarita.github.io",
@@ -17,10 +25,6 @@
         "Access-Control-Allow-Headers": "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version, Authorization",
         "Access-Control-Allow-Credentials": "true"
       }
-    },
-    {
-      "src": "/verify",
-      "dest": "/verify.js"
     },
     {
       "src": "/(.*)",

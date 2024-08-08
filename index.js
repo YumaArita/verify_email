@@ -28,10 +28,10 @@ app.options('*', (req, res) => {
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // 直接 /verification-api/api/verify エンドポイントを処理
-app.all('/verification-api/api/verify', require('./verification-api/api/verify'));
+app.all('/api/verify', require('./verification-api/api/verify'));
 
 // 直接 /verification-api/api/generate-token エンドポイントを処理
-app.all('/verification-api/api/generate-token', require('./verification-api/api/generate-token'));
+app.all('/api/generate-token', require('./verification-api/api/generate-token'));
 
 // 静的ファイルの提供
 app.use(express.static(path.join(__dirname, 'public')));

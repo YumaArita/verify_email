@@ -60,10 +60,12 @@
     </style>
     <script>
     function verifyEmail() {
+        console.log('Verifying email...'); // ログ追加
         const urlParams = new URLSearchParams(window.location.search);
         const token = urlParams.get('token');
+        console.log('Token:', token); // ログ追加
         if (token) {
-            fetch('https://your-backend-domain.com/api/verify', {
+            fetch('https://verify-email-mu.vercel.app/api/verify', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -74,12 +76,14 @@
                 mode: 'cors'
             })
             .then(response => {
+                console.log('Response status:', response.status); // ログ追加
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }
                 return response.json();
             })
             .then(data => {
+                console.log('Response data:', data); // ログ追加
                 const resultElement = document.getElementById('result');
                 if (data.success) {
                     resultElement.innerText = 'メールアドレスが確認されました。アプリに戻ってログインしてください。';
@@ -98,6 +102,7 @@
                 document.getElementById('result').innerText = 'エラーが発生しました: ' + error.message;
             });
         } else {
+            console.log('No token found'); // ログ追加
             document.getElementById('result').innerText = 'トークンが見つかりません。';
         }
     }

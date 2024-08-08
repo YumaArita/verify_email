@@ -32,7 +32,7 @@ app.use('/api', createProxyMiddleware({
   target: 'https://verify-email-mu.vercel.app',
   changeOrigin: true,
   pathRewrite: {
-    '^/api': '/api',
+    '^/api': '',
   },
 }));
 

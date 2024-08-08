@@ -32,6 +32,10 @@ const verifyToken = (token) => {
 
 module.exports = async (req, res) => {
   const token = req.query.token;
+  if (!token) {
+    return res.status(400).json({ success: false, message: "No token provided" });
+  }
+
   try {
     const email = verifyToken(token);
     if (email) {

@@ -19,6 +19,10 @@
       }
     },
     {
+      "src": "/verify",
+      "dest": "/verify.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/index.js"
     }

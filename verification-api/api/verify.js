@@ -12,17 +12,12 @@ const verifyToken = (token) => {
   }
 
   const [base64data, receivedSignature] = parts;
-  if (!base64data || !receivedSignature) {
-    return null;
-  }
-
   const expectedSignature = crypto.createHmac('sha256', SECRET_KEY).update(base64data).digest('hex');
   if (expectedSignature !== receivedSignature) {
     return null;
   }
 
   const decodedData = JSON.parse(Buffer.from(base64data, 'base64').toString('utf-8'));
-
   if (decodedData.exp < Math.floor(Date.now() / 1000)) {
     return null;
   }
@@ -31,7 +26,7 @@ const verifyToken = (token) => {
 };
 
 module.exports = async (req, res) => {
-  const token = req.query.token;
+  const token = req.query.token || req.body.token;
   if (!token) {
     return res.status(400).json({ success: false, message: "No token provided" });
   }

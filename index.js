@@ -34,6 +34,9 @@ app.use('/api', createProxyMiddleware({
   pathRewrite: {
     '^/api': '',
   },
+  onProxyReq: (proxyReq, req, res) => {
+    console.log('Proxying request to:', proxyReq.url);
+  },
 }));
 
 // 静的ファイルの提供

@@ -9,7 +9,7 @@
   "routes": [
     {
       "src": "/api/(.*)",
-      "dest": "/verification-api/api/verify.js",
+      "dest": "/index.js",
       "methods": ["OPTIONS", "POST", "GET"],
       "headers": {
         "Access-Control-Allow-Origin": "https://yumaarita.github.io",

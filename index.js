@@ -29,10 +29,10 @@ app.get('/favicon.ico', (req, res) => res.status(204));
 
 // プロキシ設定
 app.use('/api', createProxyMiddleware({
-  target: 'https://verify-email-4bengvvmh-yuma-fukudas-projects.vercel.app', // VercelにデプロイしたバックエンドAPIのURL
+  target: 'https://verify-email-mu.vercel.app',
   changeOrigin: true,
   pathRewrite: {
-    '^/api': '', // /apiから始まるパスをバックエンドAPIのルートにマッピングします
+    '^/api': '',
   },
 }));
 

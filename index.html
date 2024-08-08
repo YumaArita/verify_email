@@ -88,7 +88,7 @@
                 if (data.success) {
                     resultElement.innerText = 'メールアドレスが確認されました。アプリに戻ってログインしてください。';
                     const link = document.createElement('a');
-                    link.href = 'exp+expensetracker://verify?token=' + token;
+                    link.href = 'expensetracker://verify?token=' + token;
                     link.innerText = 'アプリを開く';
                     link.className = 'link';
                     resultElement.appendChild(document.createElement('br'));

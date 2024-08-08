@@ -1,8 +1,8 @@
 const tokens = require('./token');
 
 module.exports = async (req, res) => {
-  if (req.method === "POST") {
-    const { token } = req.body;
+  if (req.method === "POST" || req.method === "GET") {
+    const token = req.method === "POST" ? req.body.token : req.query.token;
     try {
       if (tokens[token]) {
         tokens[token].verified = true;
